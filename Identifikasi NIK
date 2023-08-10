@@ -1,1 +1,31 @@
+CREATE OR REPLACE FUNCTION kai_rts.ktp_cek(nik_col character varying)
+ RETURNS text
+ LANGUAGE plpgsql
+AS $function$
+DECLARE 
+   v_provinsi_code bigint;
+BEGIN
+    -- lenght validation
+    IF LENGTH(nik_col) <> 16 THEN
+        RETURN 'Bukan NIK';
+    ELSE
+        -- Numarical carachter validation
+        IF nik_col ~ E'^\\d+$' THEN
+            -- VProvice code
+            v_provinsi_code := CAST(SUBSTRING(nik_col FROM 1 FOR 2) AS bigint);
+            IF v_provinsi_code NOT IN (11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 
+                                       31, 32, 33, 34, 35, 36, 51, 52, 53, 61, 
+                                       62, 63, 64, 65, 71, 72, 73, 74, 75, 76, 
+                                       81, 82) THEN
+                RETURN 'Bukan NIK';
+            ELSE
+                RETURN 'NIK';
+            END IF;
+        ELSE
+            RETURN 'Bukan NIK';
+        END IF;
+    END IF;
+END;
+$function$
+;
 
