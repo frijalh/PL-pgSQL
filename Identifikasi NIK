@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION kai_rts.ktp_cek(nik_col character varying)
+CREATE OR REPLACE FUNCTION (schema databases).ktp_cek(nik_col character varying)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
